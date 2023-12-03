@@ -24,7 +24,7 @@ WORKSPACE="$HOME/linorobot2_ws"
 
 ROBOT_TYPE_ARRAY=(2wd 4wd mecanum)
 DEPTH_SENSOR_ARRAY=(realsense zed zedm zed2 zed2i oakd oakdlite oakdpro)
-LASER_SENSOR_ARRAY=(rplidar ldlidar ydlidar xv11)
+LASER_SENSOR_ARRAY=(rplidar ldlidar ydlidar xv11 lakibeam1)
 LASER_SENSOR_ARRAY+=(${DEPTH_SENSOR_ARRAY[@]})
 
 if [ -z "$LASER_SENSOR" ]
@@ -49,6 +49,14 @@ function install_cuda_jetson {
     #  /tmp/apt-dpkg-install-TvUCLd/14-libnvidia-compute-470_470.57.02-0ubuntu1_arm64.deb
     #  /tmp/apt-dpkg-install-TvUCLd/18-libnvidia-gl-470_470.57.02-0ubuntu1_arm64.deb
     # E: Sub-process /usr/bin/dpkg returned an error code (1)
+}
+
+function install_lakibeam1 {
+    cd $WORKSPACE
+    git clone https://github.com/Sylvania2/Lakibeam1-ROS2.git src
+    mv src/lakibeam1_ros2_v1_0_0 src/lakibeam1
+    colcon build
+    source $WORKSPACE/install/setup.bash
 }
 
 function install_xv11 {
