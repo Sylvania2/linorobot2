@@ -53,8 +53,7 @@ function install_cuda_jetson {
 
 function install_lakibeam1 {
     cd $WORKSPACE
-    git clone https://github.com/Sylvania2/Lakibeam1-ROS2.git src
-    mv src/lakibeam1_ros2_v1_0_0 src/lakibeam1
+    git clone https://github.com/Sylvania2/Lakibeam1-ROS2.git src/lakibeam1
     colcon build
     source $WORKSPACE/install/setup.bash
 }
