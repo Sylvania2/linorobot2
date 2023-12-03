@@ -92,10 +92,19 @@ function install_ydlidar {
 }
 
 function install_realsense {
-    sudo apt install -y ros-$ROS_DISTRO-realsense2-camera
-    cd /tmp
+    #sudo apt install -y ros-$ROS_DISTRO-realsense2-camera
+    #cd /tmp
+    cd $WORKSPACE
+    git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development src/realsense
+    sudo apt-get install python3-rosdep -y
+    sudo rosdep init # "sudo rosdep init --include-eol-distros" for Foxy and earlier
+    rosdep update # "sudo rosdep update --include-eol-distros" for Foxy and earlier
+    rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y    
     wget https://raw.githubusercontent.com/IntelRealSense/librealsense/master/config/99-realsense-libusb.rules
     sudo cp 99-realsense-libusb.rules /etc/udev/rules.d
+    colcon build
+    source $WORKSPACE/install/setup.bash
+
 }
 
 function install_astra {
